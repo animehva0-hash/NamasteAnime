@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1a1a2e;
+  --color-secondary: #16213e;
+  --color-accent: #0f3460;
+  --color-highlight: #e94560;
+  --color-surface: #0f0f23;
+  --color-surface-light: #1a1a3e;
+  --color-card: #141428;
+  --color-card-hover: #1e1e3a;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0aec0;
+  --color-text-muted: #718096;
+  --color-border: #2d2d5e;
+  --color-sidebar: #0d1b2a;
+  --color-sidebar-hover: #1b2a4a;
+  --color-sidebar-active: #e94560;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2d2d5e #0f0f23;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #0f0f23;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.anime-card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.anime-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(233, 69, 96, 0.12);
+}
+
+@media (max-width: 640px) {
+  .anime-card-hover:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #e94560, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fadeIn 0.4s ease forwards; }
+
+@keyframes skeleton {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #1a1a3e 25%, #2d2d5e 50%, #1a1a3e 75%);
+  background-size: 200% 100%;
+  animation: skeleton 1.5s ease-in-out infinite;
+}

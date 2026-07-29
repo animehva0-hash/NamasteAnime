@@ -1,0 +1,10 @@
+```json
+{
+  "crons": [
+    {
+      "path": "/api/sync",
+      "schedule": "0 */6 * * *"
+    }
+  ]
+}
+```
