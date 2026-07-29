@@ -19,7 +19,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # Environment variables available to all build steps
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
@@ -59,7 +58,8 @@ jobs:
       - name: Restore cache
         uses: actions/cache@v4
         with:
-          path: .next/cache
+          path: |
+            .next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
@@ -67,13 +67,25 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
+      - name: Check DATABASE_URL
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "❌ DATABASE_URL is missing"
+            exit 1
+          else
+            echo "✅ DATABASE_URL is available"
+          fi
+
       - name: Build with Next.js
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
+
 
   deploy:
     environment:
